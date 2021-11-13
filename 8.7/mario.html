@@ -85,7 +85,9 @@
                         // 算出 bytes
                         let x = j * pixelSize * pixelWidth
                         let y = i * pixelSize * pixelWidth
-                        let index = window.offset + (i * 8 + j) * numberOfBytesPerBlock
+                        // let index = window.offset + (i * 8 + j) * numberOfBytesPerBlock
+                        let index = (i * 8 + j) * numberOfBytesPerBlock
+                        log(index, bytes.slice(index), x, y, pixelWidth)
                         drawBlock(context, bytes.slice(index), x, y, pixelWidth)
                     }
                 }
@@ -98,6 +100,7 @@
                     drawNes(window.bytes)
                 },
             }
+
             const bindEvents = () => {
                 e('.gua-controls').addEventListener('click', event => {
                     let action = event.target.dataset.action
@@ -105,6 +108,7 @@
                     actions[action] && actions[action](offset)
                 })
             }
+
             const __main = () => {
                 window.offset = 32784
                 let request = {
