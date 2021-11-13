@@ -50,7 +50,7 @@ const ajax = request => {
     r.open('GET', request.url, true)
     r.responseType = 'arraybuffer'
     r.onreadystatechange = event => {
-        if (r.reandyState == 4) {
+        if (r.readyState == 4) {
             request.callback(r.response)
         }
     }

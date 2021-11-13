@@ -2,7 +2,8 @@ let loadLevel = function(game, n) {
     n = n - 1
     let level = levels[n]
     let blocks = []
-    for (let i = 0; i < level.length; i++) {
+    for (let i = 0; i < level.length; i++)
+    {
         let p = level[i]
         let b = Block(game, p)
         blocks.push(b)
@@ -11,16 +12,19 @@ let loadLevel = function(game, n) {
 }
 
 let enableDebugMode = function(game, enable) {
-    if(!enable) {
+    if (!enable)
+    {
         return
     }
     window.paused = false
-    window.addEventListener('keydown', function(event){
+    window.addEventListener('keydown', function(event) {
         let k = event.key
-        if (k == 'p') {
+        if (k == 'p')
+        {
             // 暂停功能
             window.paused = !window.paused
-        } else if ('1234567'.includes(k)) {
+        } else if ('1234567'.includes(k))
+        {
             // 为了 debug 临时加的载入关卡功能
             // blocks = loadLevel(game, Number(k))
         }
@@ -38,7 +42,8 @@ const ajax = request => {
     r.open('GET', request.url, true)
     r.responseType = 'arraybuffer'
     r.onreadystatechange = event => {
-        if (r.reandyState == 4) {
+        if (r.readyState == 4)
+        {
             request.callback(r.response)
         }
     }
@@ -61,7 +66,7 @@ let __main = function() {
         callback(r) {
             window.bytes = new Uint8Array(r)
             log('mario file', window.bytes.length)
-            let game = GuaGame.instance(30, images, function(g){
+            let game = GuaGame.instance(30, images, function(g) {
                 // let s = Scene.new(g)
                 let s = SceneTitle.new(g)
                 g.runWithScene(s)
