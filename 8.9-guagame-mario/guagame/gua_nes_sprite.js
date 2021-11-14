@@ -1,7 +1,7 @@
 class GuaNesSprite {
     constructor(game) {
         this.game = game
-        this.tileOffset = 32784
+        this.tileOffset = 33296
         this.data = window.bytes.slice(this.tileOffset)
         // 为了省事，在这里 hard code 一套动画
         this.animations = {
@@ -74,7 +74,7 @@ class GuaNesSprite {
                 let x = j * blockSize
                 let y = i * blockSize
                 let pixels = data.slice(offset)
-                this.drawBlock(context, data, x, y, pixelWidth)
+                this.drawBlock(context, pixels, x, y, pixelWidth)
                 offset += 16
             }
         }
