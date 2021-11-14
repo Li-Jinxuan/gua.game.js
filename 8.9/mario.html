@@ -81,8 +81,9 @@
                     {
                         let x = j * blockSize
                         let y = i * blockSize
+                        log(x, y)
                         let pixels = data.slice(offset)
-                        drawBlock(context, data, x, y, pixelWidth)
+                        drawBlock(context, pixels, x, y, pixelWidth)
                         offset += 16
                     }
                 }
@@ -135,8 +136,8 @@
 
             const __main = () => {
                 window.paused = false
-                window.offset = 32784
-                let tileOffset = 32784
+                window.offset = 33296
+                let tileOffset = 33296
                 let request = {
                     url: 'mario.nes',
                     callback(r) {
@@ -148,7 +149,7 @@
                         let tilePerSprite = 8
                         let bytesPerSprite = bytesPerBlock * tilePerSprite
                         setInterval(function() {
-                            let offset = tileOffset + step * bytesPerBlock
+                            let offset = tileOffset + step * bytesPerSprite
                             drawSprite(bytes.slice(offset))
                             if (window.paused)
                             {
