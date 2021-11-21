@@ -10,12 +10,15 @@ let Ball = function(game) {
         o.fired = true
     }
     o.move = function() {
-        if (o.fired) {
+        if (o.fired)
+        {
             // log('move')
-            if (o.x < 0 || o.x > 400) {
+            if (o.x < 0 || o.x > 400)
+            {
                 o.speedX = -o.speedX
             }
-            if (o.y < 0 || o.y > 300) {
+            if (o.y < 0 || o.y > 300)
+            {
                 o.speedY = -o.speedY
             }
             // move

@@ -2,7 +2,8 @@ let loadLevel = function(game, n) {
     n = n - 1
     let level = levels[n]
     let blocks = []
-    for (let i = 0; i < level.length; i++) {
+    for (let i = 0; i < level.length; i++)
+    {
         let p = level[i]
         let b = Block(game, p)
         blocks.push(b)
@@ -12,16 +13,20 @@ let loadLevel = function(game, n) {
 
 let blocks = []
 let enableDebugMode = function(game, enable) {
-    if(!enable) {
+    if (!enable)
+    {
         return
     }
     window.paused = false
-    window.addEventListener('keydown', function(event){
+    window.addEventListener('keydown', function(event) {
         let k = event.key
-        if (k == 'p') {
+        if (k == 'p')
+        {
             // 暂停功能
             window.paused = !window.paused
-        } else if ('1234567'.includes(k)) {
+        }
+        else if ('1234567'.includes(k))
+        {
             // 为了 debug 临时加的载入关卡功能
             blocks = loadLevel(game, Number(k))
         }
@@ -40,7 +45,7 @@ let __main = function() {
         block: 'block.png',
         paddle: 'paddle.png',
     }
-    let game = GuaGame(30, images, function(g){
+    let game = GuaGame(30, images, function(g) {
         let paddle = Paddle(game)
         let ball = Ball(game)
 
@@ -49,30 +54,34 @@ let __main = function() {
         blocks = loadLevel(game, 1)
 
         let paused = false
-        game.registerAction('a', function(){
+        game.registerAction('a', function() {
             paddle.moveLeft()
         })
-        game.registerAction('d', function(){
+        game.registerAction('d', function() {
             paddle.moveRight()
         })
-        game.registerAction('f', function(){
+        game.registerAction('f', function() {
             ball.fire()
         })
 
         game.update = function() {
-            if (window.paused) {
+            if (window.paused)
+            {
                 return
             }
             ball.move()
             // 判断相撞
-            if (paddle.collide(ball)) {
+            if (paddle.collide(ball))
+            {
                 // 这里应该调用一个 ball.反弹() 来实现
                 ball.反弹()
             }
             // 判断 ball 和 blocks 相撞
-            for (let i = 0; i < blocks.length; i++) {
+            for (let i = 0; i < blocks.length; i++)
+            {
                 let block = blocks[i]
-                if (block.collide(ball)) {
+                if (block.collide(ball))
+                {
                     // log('block 相撞')
                     block.kill()
                     ball.反弹()
@@ -86,9 +95,11 @@ let __main = function() {
             game.drawImage(paddle)
             game.drawImage(ball)
             // draw blocks
-            for (let i = 0; i < blocks.length; i++) {
+            for (let i = 0; i < blocks.length; i++)
+            {
                 let block = blocks[i]
-                if (block.alive) {
+                if (block.alive)
+                {
                     game.drawImage(block)
                 }
             }
