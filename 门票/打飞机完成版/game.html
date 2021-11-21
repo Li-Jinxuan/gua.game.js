@@ -16,9 +16,7 @@
         <script src='guagame/gua_image.js'></script>
         <script src='guagame/gua_particle_system.js'></script>
         <!-- 场景文件 -->
-        <script src='scene/main/paddle.js'></script>
         <script src='scene/main/ball.js'></script>
-        <script src='scene/main/block.js'></script>
         <script src='scene/main/scene.js'></script>
         <!-- 结束和标题场景 -->
         <script src='scene/end/scene_end.js'></script>
@@ -36,40 +34,40 @@
         <div class="">
             <label>
                 <input class="gua-auto-slider" type="range"
-                    value="10"
-                    data-value="config.player_speed"
+                       value="10"
+                       data-value="config.player_speed"
                 >
-                玩家速度：<span class="gua-label"></span>
+                玩家速度：<span class="gua-label"></span>
             </label>
         </div>
         <div class="">
             <label>
                 <input class="gua-auto-slider" type="range"
-                    value=""
-                    max="10"
-                    data-value="config.fire_cooldown"
+                       value=""
+                       max="10"
+                       data-value="config.fire_cooldown"
                 >
-                子弹冷却时间：<span class="gua-label"></span>
+                子弹冷却时间：<span class="gua-label"></span>
             </label>
         </div>
         <div class="">
             <label>
                 <input class="gua-auto-slider" type="range"
-                    value=""
-                    min="-10"
-                    max='10'
-                    data-value="config.cloud_speed"
+                       value=""
+                       min="-10"
+                       max='10'
+                       data-value="config.cloud_speed"
                 >
-                cloud speed: <span class="gua-label"></span>
+                cloud speed: <span class="gua-label"></span>
             </label>
         </div>
         <div class="">
             <label>
                 <input class="gua-auto-slider" type="range"
-                    value=""
-                    data-value="config.bullet_speed"
+                       value=""
+                       data-value="config.bullet_speed"
                 >
-                bullet 速度：<span class="gua-label"></span>
+                bullet 速度：<span class="gua-label"></span>
             </label>
         </div>
 
@@ -79,7 +77,8 @@
 
             let bindAll = function(sel, eventName, callback) {
                 let l = es(sel)
-                for (let i = 0; i < l.length; i++) {
+                for (let i = 0; i < l.length; i++)
+                {
                     let input = l[i]
                     input.addEventListener(eventName, function(event) {
                         callback(event)
@@ -87,7 +86,7 @@
                 }
             }
 
-            bindAll('.gua-auto-slider', 'input', function(event){
+            bindAll('.gua-auto-slider', 'input', function(event) {
                 let target = event.target
                 let bindVar = target.dataset.value
                 let v = target.value

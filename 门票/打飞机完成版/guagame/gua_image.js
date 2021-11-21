@@ -6,14 +6,21 @@ class GuaImage {
         this.y = 0
         this.w = this.texture.width
         this.h = this.texture.height
+        this.alive = true
     }
+
     static new(game, name) {
         let i = new this(game, name)
         return i
     }
+
     draw() {
-        this.game.drawImage(this)
+        if (this.alive)
+        {
+            this.game.drawImage(this)
+        }
     }
+
     update() {
 
     }

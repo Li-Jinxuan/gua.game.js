@@ -11,12 +11,28 @@ class Bullet extends GuaImage {
         super(game, 'bullet')
         this.setup()
     }
+
     setup() {
-        // this.speed = 15
         this.speed = config.bullet_speed
     }
+
     update() {
         this.y -= this.speed
+    }
+}
+
+class EnemyBullet extends GuaImage {
+    constructor(game) {
+        super(game, 'bullet')
+        this.setup()
+    }
+
+    setup() {
+        this.speed = 5
+    }
+
+    update() {
+        this.y += this.speed
     }
 }
 
@@ -25,18 +41,23 @@ class Player extends GuaImage {
         super(game, 'player')
         this.setup()
     }
+
     setup() {
         this.speed = 5
         this.cooldown = 0
     }
+
     update() {
         this.speed = config.player_speed
-        if (this.cooldown > 0) {
+        if (this.cooldown > 0)
+        {
             this.cooldown--
         }
     }
+
     fire() {
-        if (this.cooldown == 0) {
+        if (this.cooldown == 0)
+        {
             this.cooldown = config.fire_cooldown
             let x = this.x + this.w / 2
             let y = this.y
@@ -44,17 +65,28 @@ class Player extends GuaImage {
             b.x = x
             b.y = y
             this.scene.addElement(b)
+            this.scene.myBullets.push(b)
         }
     }
+
+    kill() {
+        this.alive = false
+        let ps = GuaParticleSystem.new(this.game, this.x, this.y)
+        this.scene.addElement(ps)
+    }
+
     moveLeft() {
         this.x -= this.speed
     }
+
     moveRight() {
         this.x += this.speed
     }
+
     moveUp() {
         this.y -= this.speed
     }
+
     moveDown() {
         this.y += this.speed
     }
@@ -67,15 +99,44 @@ class Enemy extends GuaImage {
         super(game, name)
         this.setup()
     }
+
     setup() {
         this.speed = randomBetween(2, 5)
         this.x = randomBetween(0, 350)
         this.y = -randomBetween(0, 200)
+        this.cooldown = randomBetween(0, 100)
     }
+
+    fire() {
+        if (this.cooldown == 0)
+        {
+            this.cooldown = randomBetween(0, 100)
+            let x = this.x + this.w / 2
+            let y = this.y + this.h / 2
+            let b = EnemyBullet.new(this.game)
+            b.x = x
+            b.y = y
+            this.scene.addElement(b)
+            this.scene.enemyBullets.push(b)
+        }
+    }
+
+    kill() {
+        this.alive = false
+        let ps = GuaParticleSystem.new(this.game, this.x, this.y)
+        this.scene.addElement(ps)
+    }
+
     update() {
         this.y += this.speed
-        if (this.y > 600) {
+        if (this.y > 600)
+        {
             this.setup()
+        }
+        if (this.cooldown > 0)
+        {
+            this.cooldown--
+            this.fire()
         }
     }
 }
@@ -85,18 +146,22 @@ class Cloud extends GuaImage {
         super(game, 'cloud')
         this.setup()
     }
+
     setup() {
         this.speed = 1
         this.x = randomBetween(0, 350)
         this.y = -randomBetween(0, 200)
     }
+
     update() {
         this.speed = config.cloud_speed
         this.y += this.speed
-        if (this.y > 600) {
+        if (this.y > 600)
+        {
             this.setup()
         }
     }
+
     debug() {
         this.speed = config.cloud_speed
     }
@@ -108,6 +173,7 @@ class Scene extends GuaScene {
         this.setup()
         this.setupInputs()
     }
+
     setup() {
         let game = this.game
         this.numberOfEnemies = 10
@@ -119,47 +185,84 @@ class Scene extends GuaScene {
         // this.player.y = 150
         this.player = Player.new(game)
         this.player.x = 100
-        this.player.y = 150
+        this.player.y = 450
 
+        this.myBullets = []
 
         this.addElement(this.bg)
         this.addElement(this.cloud)
         this.addElement(this.player)
         //
+        this.enemies = []
         this.addEnemies()
-        let ps = GuaParticleSystem.new(this.game)
-        this.addElement(ps)
+
+        this.enemyBullets = []
+
+        // let ps = GuaParticleSystem.new(this.game)
+        // this.addElement(ps)
     }
+
     addEnemies() {
         let es = []
-        for (let i = 0; i < this.numberOfEnemies; i++) {
+        for (let i = 0; i < this.numberOfEnemies; i++)
+        {
             let e = Enemy.new(this.game)
             es.push(e)
             this.addElement(e)
         }
         this.enemies = es
     }
+
     setupInputs() {
         let g = this.game
         let s = this
-        g.registerAction('a', function(){
+        g.registerAction('a', function() {
             s.player.moveLeft()
         })
-        g.registerAction('d', function(){
+        g.registerAction('d', function() {
             s.player.moveRight()
         })
-        g.registerAction('w', function(){
+        g.registerAction('w', function() {
             s.player.moveUp()
         })
-        g.registerAction('s', function(){
+        g.registerAction('s', function() {
             s.player.moveDown()
         })
-        g.registerAction('j', function(){
+        g.registerAction('j', function() {
             s.player.fire()
         })
     }
+
+    isEnemyMeetMyBullet(enemy) {
+        for (const myBullet of this.myBullets)
+        {
+            if (isIntersect(myBullet, enemy))
+            {
+                myBullet.alive = false
+                enemy.alive = false
+                return true
+            }
+        }
+        return false
+    }
+
     update() {
         super.update()
         this.cloud.y += 1
+
+        for (const enemy of this.enemies)
+        {
+            if (isIntersect(enemy, this.player)) // 敌机与飞机相撞
+            {
+                this.player.kill()
+                enemy.kill()
+                break
+            }
+            else if (this.isEnemyMeetMyBullet(enemy))
+            {
+                enemy.kill()
+                break
+            }
+        }
     }
 }

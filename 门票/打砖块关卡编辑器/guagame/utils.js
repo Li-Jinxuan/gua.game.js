@@ -10,8 +10,10 @@ let imageFromPath = function(path) {
 
 let rectIntersects = function(a, b) {
     let o = a
-    if (b.y > o.y && b.y < o.y + o.image.height) {
-        if (b.x > o.x && b.x < o.x + o.image.width) {
+    if (b.y > o.y && b.y < o.y + o.image.height)
+    {
+        if (b.x > o.x && b.x < o.x + o.image.width)
+        {
             return true
         }
     }

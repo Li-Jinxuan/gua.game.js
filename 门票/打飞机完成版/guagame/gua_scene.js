@@ -4,30 +4,37 @@ class GuaScene {
         this.debugModeEnabled = true
         this.elements = []
     }
+
     static new(game) {
         let i = new this(game)
         return i
     }
+
     addElement(img) {
         img.scene = this
         this.elements.push(img)
     }
 
-
     draw() {
-        for (let e of this.elements) {
+        for (let e of this.elements)
+        {
             // this.game.drawImage(e)
             e.draw()
         }
     }
+
     update() {
-        if (this.debugModeEnabled) {
-            for (let i = 0; i < this.elements.length; i++) {
+        if (this.debugModeEnabled)
+        {
+            for (let i = 0; i < this.elements.length; i++)
+            {
                 let e = this.elements[i]
                 e.debug && e.debug()
             }
         }
-        for (let i = 0; i < this.elements.length; i++) {
+
+        for (let i = 0; i < this.elements.length; i++)
+        {
             let e = this.elements[i]
             e.update()
         }
