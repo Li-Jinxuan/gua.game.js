@@ -13,7 +13,8 @@ let Block = function(game, position) {
     o.h = img.h
     o.kill = function() {
         o.lifes--
-        if (o.lifes < 1) {
+        if (o.lifes < 1)
+        {
             o.alive = false
         }
     }

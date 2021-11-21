@@ -2,7 +2,8 @@ let loadLevel = function(game, n) {
     n = n - 1
     let level = levels[n]
     let blocks = []
-    for (let i = 0; i < level.length; i++) {
+    for (let i = 0; i < level.length; i++)
+    {
         let p = level[i]
         let b = Block(game, p)
         blocks.push(b)
@@ -11,16 +12,20 @@ let loadLevel = function(game, n) {
 }
 
 let enableDebugMode = function(game, enable) {
-    if(!enable) {
+    if (!enable)
+    {
         return
     }
     window.paused = false
-    window.addEventListener('keydown', function(event){
+    window.addEventListener('keydown', function(event) {
         let k = event.key
-        if (k == 'p') {
+        if (k == 'p')
+        {
             // 暂停功能
             window.paused = !window.paused
-        } else if ('1234567'.includes(k)) {
+        }
+        else if ('1234567'.includes(k))
+        {
             // 为了 debug 临时加的载入关卡功能
             blocks = loadLevel(game, Number(k))
         }
@@ -39,7 +44,7 @@ let __main = function() {
         block: 'img/block.png',
         paddle: 'img/paddle.png',
     }
-    let game = GuaGame.instance(30, images, function(g){
+    let game = GuaGame.instance(30, images, function(g) {
         let s = SceneTitle.new(g)
         g.runWithScene(s)
     })

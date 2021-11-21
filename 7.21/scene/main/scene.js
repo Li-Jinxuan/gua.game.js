@@ -10,13 +10,13 @@ let Scene = function(game) {
 
     let blocks = loadLevel(game, 1)
 
-    game.registerAction('a', function(){
+    game.registerAction('a', function() {
         paddle.moveLeft()
     })
-    game.registerAction('d', function(){
+    game.registerAction('d', function() {
         paddle.moveRight()
     })
-    game.registerAction('f', function(){
+    game.registerAction('f', function() {
         ball.fire()
     })
 
@@ -28,9 +28,11 @@ let Scene = function(game) {
         game.drawImage(paddle)
         game.drawImage(ball)
         // draw blocks
-        for (let i = 0; i < blocks.length; i++) {
+        for (let i = 0; i < blocks.length; i++)
+        {
             let block = blocks[i]
-            if (block.alive) {
+            if (block.alive)
+            {
                 game.drawImage(block)
             }
         }
@@ -38,26 +40,31 @@ let Scene = function(game) {
         game.context.fillText('分数: ' + score, 10, 290)
     }
     s.update = function() {
-        if (window.paused) {
+        if (window.paused)
+        {
             return
         }
 
         ball.move()
         // 判断游戏结束
-        if (ball.y > paddle.y) {
+        if (ball.y > paddle.y)
+        {
             // 跳转到 游戏结束 的场景
             let end = SceneEnd.new(game)
             game.replaceScene(end)
         }
         // 判断相撞
-        if (paddle.collide(ball)) {
+        if (paddle.collide(ball))
+        {
             // 这里应该调用一个 ball.反弹() 来实现
             ball.反弹()
         }
         // 判断 ball 和 blocks 相撞
-        for (let i = 0; i < blocks.length; i++) {
+        for (let i = 0; i < blocks.length; i++)
+        {
             let block = blocks[i]
-            if (block.collide(ball)) {
+            if (block.collide(ball))
+            {
                 // log('block 相撞')
                 block.kill()
                 ball.反弹()
@@ -74,7 +81,8 @@ let Scene = function(game) {
         let y = event.offsetY
         log(x, y, event)
         // 检查是否点中了 ball
-        if (ball.hasPoint(x, y)) {
+        if (ball.hasPoint(x, y))
+        {
             // 设置拖拽状态
             enableDrag = true
         }
@@ -83,7 +91,8 @@ let Scene = function(game) {
         let x = event.offsetX
         let y = event.offsetY
         // log(x, y, 'move')
-        if (enableDrag) {
+        if (enableDrag)
+        {
             log(x, y, 'drag')
             ball.x = x
             ball.y = y
