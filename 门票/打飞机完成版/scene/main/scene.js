@@ -56,7 +56,7 @@ class Player extends GuaImage {
     }
 
     fire() {
-        if (this.cooldown == 0)
+        if (this.cooldown == 0 && this.alive)
         {
             this.cooldown = config.fire_cooldown
             let x = this.x + this.w / 2
@@ -71,7 +71,7 @@ class Player extends GuaImage {
 
     kill() {
         this.alive = false
-        let ps = GuaParticleSystem.new(this.game, this.x, this.y)
+        let ps = GuaParticleSystem.new(this.game, this.x + this.w / 2, this.y + this.h / 2)
         this.scene.addElement(ps)
     }
 
@@ -123,7 +123,7 @@ class Enemy extends GuaImage {
 
     kill() {
         this.alive = false
-        let ps = GuaParticleSystem.new(this.game, this.x, this.y)
+        let ps = GuaParticleSystem.new(this.game, this.x + this.w / 2, this.y + this.h / 2)
         this.scene.addElement(ps)
     }
 
@@ -133,7 +133,7 @@ class Enemy extends GuaImage {
         {
             this.setup()
         }
-        if (this.cooldown > 0)
+        if (this.cooldown > 0 && this.alive)
         {
             this.cooldown--
             this.fire()
@@ -233,7 +233,7 @@ class Scene extends GuaScene {
         })
     }
 
-    isEnemyMeetMyBullet(enemy) {
+    enemyMeetMyBullet(enemy) {
         for (const myBullet of this.myBullets)
         {
             if (isIntersect(myBullet, enemy))
@@ -246,21 +246,48 @@ class Scene extends GuaScene {
         return false
     }
 
+    enemyBulletMeetMyBullet(enemyBullet) {
+        for (const myBullet of this.myBullets)
+        {
+            if (isIntersect(myBullet, enemyBullet))
+            {
+                myBullet.alive = false
+                enemyBullet.alive = false
+                return true
+            }
+        }
+        return false
+    }
+
     update() {
         super.update()
         this.cloud.y += 1
 
         for (const enemy of this.enemies)
         {
-            if (isIntersect(enemy, this.player)) // 敌机与飞机相撞
+            if (isIntersect(enemy, this.player)) // 敌机与我机相撞
             {
                 this.player.kill()
                 enemy.kill()
                 break
             }
-            else if (this.isEnemyMeetMyBullet(enemy))
+            else if (this.enemyMeetMyBullet(enemy)) // 敌机与我机子弹相撞
             {
                 enemy.kill()
+                break
+            }
+        }
+
+        for (const enemyBullet of this.enemyBullets)
+        {
+            if (isIntersect(enemyBullet, this.player)) // 敌机子弹与我机相撞
+            {
+                this.player.kill()
+                enemyBullet.alive = false
+                break
+            }
+            else if (this.enemyBulletMeetMyBullet(enemyBullet)) // 敌机子弹与我机子弹相撞
+            {
                 break
             }
         }

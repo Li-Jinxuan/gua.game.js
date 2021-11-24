@@ -49,5 +49,6 @@ let Paddle = function(game) {
         }
         return false
     }
+
     return o
 }

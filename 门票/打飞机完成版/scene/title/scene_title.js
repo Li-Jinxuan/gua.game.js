@@ -57,8 +57,8 @@ class GuaParticleSystem {
     }
 
     setup() {
-        this.duration = 1
-        this.numberOfParticles = 1
+        this.duration = 15
+        this.numberOfParticles = 20
         this.particles = []
     }
 

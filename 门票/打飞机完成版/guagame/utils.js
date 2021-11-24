@@ -21,7 +21,7 @@ let rectIntersects = function(a, b) {
 }
 
 const isIntersect = function(a, b) {
-    return (rectIntersects(a, b) || rectIntersects(b, a))
+    return (a.alive && b.alive) && (rectIntersects(a, b) || rectIntersects(b, a))
 }
 
 const randomBetween = function(start, end) {
