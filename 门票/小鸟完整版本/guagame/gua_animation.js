@@ -24,6 +24,8 @@ class GuaAnimation {
         // 重力和加速度
         this.gy = 10
         this.vy = 0
+
+        this.alive = true
     }
 
     static new(game) {
@@ -69,24 +71,33 @@ class GuaAnimation {
     }
 
     draw() {
-        let context = this.game.context
-        context.save()
-
-        let w2 = this.w / 2
-        let h2 = this.h / 2
-        context.translate(this.x + w2, this.y + h2)
-        if (this.flipX)
+        if (this.alive)
         {
-            context.scale(-1, 1)
+            let context = this.game.context
+            context.save()
+
+            let w2 = this.w / 2
+            let h2 = this.h / 2
+            context.translate(this.x + w2, this.y + h2)
+            if (this.flipX)
+            {
+                context.scale(-1, 1)
+            }
+            context.globalAlpha = this.alpha
+
+            context.rotate(this.rotation * Math.PI / 180)
+            context.translate(-w2, -h2)
+
+            context.drawImage(this.texture, 0, 0)
+
+            context.restore()
         }
-        context.globalAlpha = this.alpha
+    }
 
-        context.rotate(this.rotation * Math.PI / 180)
-        context.translate(-w2, -h2)
-
-        context.drawImage(this.texture, 0, 0)
-
-        context.restore()
+    kill() {
+        this.alive = false
+        let s = SceneTitle.new(this.game)
+        this.game.replaceScene(s)
     }
 
     move(x, keyStatus) {

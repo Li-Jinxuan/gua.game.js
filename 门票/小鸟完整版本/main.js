@@ -49,7 +49,6 @@ let __main = function() {
         b3: 'bird/b3.png',
     }
     let game = GuaGame.instance(30, images, function(g) {
-        // let s = Scene.new(g)
         let s = SceneTitle.new(g)
         g.runWithScene(s)
     })

@@ -115,65 +115,82 @@ class Cloud extends GuaImage {
 class Scene extends GuaScene {
     constructor(game) {
         super(game)
-        this.setup()
+        // let label = GuaLabel.new(game, 'hello from gua')
+        // this.addElement(label)
+
+        // bg
+        let bg = GuaImage.new(game, 'bg')
+        this.addElement(bg)
+        // 加入水管
+        this.pipe = Pipes.new(game)
+        this.addElement(this.pipe)
+        // 循环移动的地面
+        this.grounds = []
+        for (let i = 0; i < 30; i++)
+        {
+            let g = GuaImage.new(game, 'ground')
+            g.x = i * 19
+            g.y = 540
+            this.addElement(g)
+            this.grounds.push(g)
+        }
+        this.skipCount = 4
+        // bird
+        this.birdSpeed = 2
+        let b = GuaAnimation.new(game)
+        b.x = 180
+        b.y = 200
+        this.bird = b
+        this.addElement(b)
+        //
         this.setupInputs()
     }
 
-    setup() {
-        let game = this.game
-        this.numberOfEnemies = 10
-        this.bg = GuaImage.new(this.game, 'sky')
-        this.cloud = Cloud.new(this.game, 'cloud')
-
-        // this.player = GuaImage.new(this.game, 'player')
-        // this.player.x = 100
-        // this.player.y = 150
-        this.player = Player.new(game)
-        this.player.x = 100
-        this.player.y = 150
-
-        this.addElement(this.bg)
-        this.addElement(this.cloud)
-        this.addElement(this.player)
-        //
-        this.addEnemies()
-        let ps = GuaParticleSystem.new(this.game)
-        this.addElement(ps)
+    static new(game) {
+        let i = new this(game)
+        return i
     }
 
-    addEnemies() {
-        let es = []
-        for (let i = 0; i < this.numberOfEnemies; i++)
-        {
-            let e = Enemy.new(this.game)
-            es.push(e)
-            this.addElement(e)
-        }
-        this.enemies = es
-    }
-
-    setupInputs() {
-        let g = this.game
-        let s = this
-        g.registerAction('a', function() {
-            s.player.moveLeft()
-        })
-        g.registerAction('d', function() {
-            s.player.moveRight()
-        })
-        g.registerAction('w', function() {
-            s.player.moveUp()
-        })
-        g.registerAction('s', function() {
-            s.player.moveDown()
-        })
-        g.registerAction('j', function() {
-            s.player.fire()
-        })
+    debug() {
+        this.birdSpeed = config.bird_speed.value
     }
 
     update() {
         super.update()
-        this.cloud.y += 1
+        // 地面移动
+        this.skipCount--
+        let offset = -5
+        if (this.skipCount == 0)
+        {
+            this.skipCount = 4
+            offset = 15
+        }
+        for (let i = 0; i < 30; i++)
+        {
+            let g = this.grounds[i]
+            g.x += offset
+        }
+        // 判断相撞
+        for (const pipe of this.pipe.pipes)
+        {
+            if (isIntersect(this.bird, pipe))
+            {
+                this.bird.kill()
+            }
+        }
+    }
+
+    setupInputs() {
+        let self = this
+        let b = this.bird
+        self.game.registerAction('a', function(keyStatus) {
+            b.move(-self.birdSpeed, keyStatus)
+        })
+        self.game.registerAction('d', function(keyStatus) {
+            b.move(self.birdSpeed, keyStatus)
+        })
+        self.game.registerAction('j', function(keyStatus) {
+            b.jump()
+        })
     }
 }
