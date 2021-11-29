@@ -6,7 +6,8 @@ class SceneTitle extends GuaScene {
         this.addElement(bg)
         // 循环移动的地面
         this.grounds = []
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 30; i++)
+        {
             let g = GuaImage.new(game, 'ground')
             g.x = i * 19
             g.y = 540
@@ -23,12 +24,15 @@ class SceneTitle extends GuaScene {
 
         this.setupInputs()
     }
+
     debug() {
         this.birdSpeed = config.bird_speed.value
     }
+
     update() {
         super.update()
     }
+
     setupInputs() {
         let self = this
         let b = this.mario

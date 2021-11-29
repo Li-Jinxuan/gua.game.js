@@ -23,7 +23,8 @@ let enableDebugMode = function(game, enable) {
         {
             // 暂停功能
             window.paused = !window.paused
-        } else if ('1234567'.includes(k))
+        }
+        else if ('1234567'.includes(k))
         {
             // 为了 debug 临时加的载入关卡功能
             // blocks = loadLevel(game, Number(k))
@@ -72,11 +73,9 @@ let __main = function() {
                 g.runWithScene(s)
             })
             enableDebugMode(game, true)
-
         },
     }
     ajax(request)
-
 }
 
 __main()

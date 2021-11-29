@@ -41,7 +41,7 @@
                         value="10"
                         data-value="config.player_speed"
                     >
-                    玩家速度：<span class="gua-label"></span>
+                   玩家速度：<span class="gua-label"></span>
                 </label>
             </div> -->
             <!-- <textarea id="id-text-log" rows="20" cols="50"></textarea> -->
@@ -53,7 +53,8 @@
 
             let bindAll = function(sel, eventName, callback) {
                 let l = es(sel)
-                for (let i = 0; i < l.length; i++) {
+                for (let i = 0; i < l.length; i++)
+                {
                     let input = l[i]
                     input.addEventListener(eventName, function(event) {
                         callback(event)
@@ -70,7 +71,7 @@
                                 value="${item.value}"
                                 data-value="config.${key}"
                             >
-                            ${item._comment}：<span class="gua-label"></span>
+                           ${item._comment}：<span class="gua-label"></span>
                         </label>
                     </div>
                 `
@@ -79,7 +80,8 @@
             let insertControls = function() {
                 let div = e('.gua-controls')
                 let keys = Object.keys(config)
-                for (let k of keys) {
+                for (let k of keys)
+                {
                     let item = config[k]
                     let html = templateControl(k, item)
                     div.insertAdjacentHTML('beforeend', html)
@@ -87,7 +89,7 @@
             }
 
             let bindEvents = function() {
-                bindAll('.gua-auto-slider', 'input', function(event){
+                bindAll('.gua-auto-slider', 'input', function(event) {
                     let target = event.target
                     let bindVar = target.dataset.value
                     let v = target.value

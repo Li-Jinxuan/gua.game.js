@@ -18,17 +18,22 @@ class GuaTileMap {
         ]
         this.tileSize = 32
     }
+
     static new(...args) {
         return new this(...args)
     }
+
     update() {
 
     }
+
     draw() {
         let h = this.th
-        for (let i = 0; i < this.tiles.length; i++) {
+        for (let i = 0; i < this.tiles.length; i++)
+        {
             let index = this.tiles[i]
-            if (index != 0) {
+            if (index != 0)
+            {
                 let x = Math.floor(i / h) * this.tileSize
                 let y = (i % h) * this.tileSize
                 let image = this.tileImages[index]
@@ -44,7 +49,7 @@ class SceneEditor extends GuaScene {
         // bg
         // let bg = GuaImage.new(game, 'bg')
         // this.addElement(bg)
-        
+
         // tile map
         let map = GuaTileMap.new(game)
         this.addElement(map)
@@ -57,12 +62,15 @@ class SceneEditor extends GuaScene {
 
         this.setupInputs()
     }
+
     debug() {
         this.birdSpeed = config.bird_speed.value
     }
+
     update() {
         super.update()
     }
+
     setupInputs() {
         let self = this
         let b = this.mario

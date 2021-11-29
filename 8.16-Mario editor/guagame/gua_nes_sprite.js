@@ -1,7 +1,7 @@
 class GuaNesSprite {
     constructor(game) {
         this.game = game
-        this.tileOffset = 32784
+        this.tileOffset = 33296
         this.data = window.bytes.slice(this.tileOffset)
         // 为了省事，在这里 hard code 一套动画
         this.animations = {
@@ -40,17 +40,20 @@ class GuaNesSprite {
         ]
         let w = pixelWidth
         let h = pixelWidth
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 8; i++)
+        {
             let p1 = data[i]
             let p2 = data[i + 8]
-            for (let j = 0; j < 8; j++) {
+            for (let j = 0; j < 8; j++)
+            {
                 // 8 bits per line
                 // 78 69    0100 1110    0100 0101
                 //  在 j 循环中，每一次画一个像素点
                 let c1 = (p1 >> (7 - j)) & 0b00000001
                 let c2 = (p2 >> (7 - j)) & 0b00000001
                 let pixel = (c2 << 1) + c1
-                if (pixel == 0) {
+                if (pixel == 0)
+                {
                     continue
                 }
                 let color = colors[pixel]
@@ -72,8 +75,10 @@ class GuaNesSprite {
         let pixelWidth = this.pixelWidth
         let blockSize = pixelsPerBlock * pixelWidth
         let offset = 0
-        for (let i = 0; i < this.rowsOfSprite; i++) {
-            for (let j = 0; j < this.columnsOfSprite; j++) {
+        for (let i = 0; i < this.rowsOfSprite; i++)
+        {
+            for (let j = 0; j < this.columnsOfSprite; j++)
+            {
                 let x = j * blockSize
                 let y = i * blockSize
                 let pixels = data.slice(offset)
@@ -94,22 +99,26 @@ class GuaNesSprite {
         // 更新 x 加速和摩擦
         this.vx += this.mx
         // 说明摩擦力已经把速度降至 0 以下，停止摩擦
-        if (this.vx * this.mx > 0) {
+        if (this.vx * this.mx > 0)
+        {
             this.vx = 0
             this.mx = 0
-        } else {
+        } else
+        {
             this.x += this.vx
         }
         // 更新受力
         this.y += this.vy
         this.vy += this.gy * 0.2
         let h = 100
-        if (this.y > h) {
+        if (this.y > h)
+        {
             this.y = h
         }
         // // log('anim update', this.frameCount)
         this.frameCount--
-        if (this.frameCount == 0) {
+        if (this.frameCount == 0)
+        {
             this.frameCount = 6
             this.frameIndex++
             this.frameIndex %= 3
@@ -124,7 +133,8 @@ class GuaNesSprite {
         let w2 = this.w / 2
         let h2 = this.h / 2
         context.translate(this.x + w2, this.y + h2)
-        if (this.flipX) {
+        if (this.flipX)
+        {
             context.scale(-1, 1)
         }
         context.globalAlpha = this.alpha
@@ -141,10 +151,12 @@ class GuaNesSprite {
         this.flipX = (x < 0)
         // this.x += x
         let s = 0.5 * x
-        if (keyStatus == 'down') {
+        if (keyStatus == 'down')
+        {
             this.vx += s
-            this.mx = -s/2
-        } else {
+            this.mx = -s / 2
+        } else
+        {
 
         }
         // log('keyStatus', keyStatus, this.flipX)
