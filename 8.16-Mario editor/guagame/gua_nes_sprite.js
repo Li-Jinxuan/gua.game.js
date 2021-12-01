@@ -82,7 +82,7 @@ class GuaNesSprite {
                 let x = j * blockSize
                 let y = i * blockSize
                 let pixels = data.slice(offset)
-                this.drawBlock(context, data, x, y, pixelWidth)
+                this.drawBlock(context, pixels, x, y, pixelWidth)
                 offset += 16
             }
         }
