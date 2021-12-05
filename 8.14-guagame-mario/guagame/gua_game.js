@@ -15,7 +15,7 @@ class GuaGame {
         window.addEventListener('keydown', event => {
             this.keydowns[event.key] = 'down'
         })
-        window.addEventListener('keyup', function(event){
+        window.addEventListener('keyup', function(event) {
             self.keydowns[event.key] = 'up'
         })
         this.init()
@@ -25,34 +25,43 @@ class GuaGame {
         this.i = this.i || new this(...args)
         return this.i
     }
+
     drawImage(img) {
         // img 是一个 GuaImage
         this.context.drawImage(img.texture, img.x, img.y)
     }
+
     // update
     update() {
         this.scene.update()
     }
+
     // draw
     draw() {
         this.scene.draw()
     }
+
     //
     registerAction(key, callback) {
         this.actions[key] = callback
     }
+
     runloop() {
         // log(window.fps)
         // events
         let g = this
         let actions = Object.keys(g.actions)
-        for (let i = 0; i < actions.length; i++) {
+        for (let i = 0; i < actions.length; i++)
+        {
             let key = actions[i]
             let status = g.keydowns[key]
-            if(status == 'down') {
+            if (status == 'down')
+            {
                 // 如果按键被按下, 调用注册的 action
                 g.actions[key]('down')
-            } else if (status == 'up') {
+            }
+            else if (status == 'up')
+            {
                 g.actions[key]('up')
                 // 删除掉这个 key 状态
                 g.keydowns[key] = null
@@ -65,10 +74,11 @@ class GuaGame {
         // draw
         g.draw()
         // next run loop
-        setTimeout(function(){
+        setTimeout(function() {
             g.runloop()
-        }, 1000/window.fps)
+        }, 1000 / window.fps)
     }
+
     textureByName(name) {
         let g = this
         // log('image by name', g.images)
@@ -80,17 +90,20 @@ class GuaGame {
         // }
         return img
     }
+
     runWithScene(scene) {
         let g = this
         g.scene = scene
         // 开始运行程序
-        setTimeout(function(){
+        setTimeout(function() {
             g.runloop()
-        }, 1000/window.fps)
+        }, 1000 / window.fps)
     }
+
     replaceScene(scene) {
         this.scene = scene
     }
+
     __start(scene) {
         this.runCallback(this)
     }
@@ -100,7 +113,8 @@ class GuaGame {
         let loads = []
         // 预先载入所有图片
         let names = Object.keys(g.images)
-        for (let i = 0; i < names.length; i++) {
+        for (let i = 0; i < names.length; i++)
+        {
             let name = names[i]
             let path = g.images[name]
             let img = new Image()
@@ -111,7 +125,8 @@ class GuaGame {
                 // 所有图片都成功载入之后, 调用 run
                 loads.push(1)
                 // log('load images', loads.length, names.length)
-                if (loads.length == names.length) {
+                if (loads.length == names.length)
+                {
                     // log('load images', g.images)
                     g.__start()
                 }
