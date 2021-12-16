@@ -33,29 +33,36 @@ class GuaTileMap {
         ]
         this.tileSize = 32
     }
+
     static new(...args) {
         return new this(...args)
     }
+
     onTheGround(i, j) {
         let index = i * this.th + j
         let tile = this.tiles[index]
         return tile != 0
     }
+
     update() {
         this.offsetX -= 1
     }
+
     draw() {
         let h = this.th
         let offsetIndex = Math.abs(parseInt(this.offsetX / this.tileSize))
         let numberOfTiles = h * (12 + 1)
-        if (offsetIndex + numberOfTiles < this.tiles.length) {
+        if (offsetIndex + numberOfTiles < this.tiles.length)
+        {
             numberOfTiles = this.tiles.length
         }
-        for (let i = offsetIndex; i < numberOfTiles; i++) {
+        for (let i = offsetIndex; i < numberOfTiles; i++)
+        {
             let index = this.tiles[i]
-            if (index != 0) {
-                x += this.offsetX
+            if (index != 0)
+            {
                 let x = Math.floor(i / h) * this.tileSize
+                x += this.offsetX
                 let y = (i % h) * this.tileSize
                 let image = this.tileImages[index]
                 this.game.context.drawImage(image.texture, x, y)

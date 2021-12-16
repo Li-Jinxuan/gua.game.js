@@ -16,12 +16,15 @@ class SceneEditor extends GuaScene {
 
         this.setupInputs()
     }
+
     debug() {
         this.birdSpeed = config.bird_speed.value
     }
+
     update() {
         super.update()
     }
+
     setupInputs() {
         let self = this
         let b = this.mario

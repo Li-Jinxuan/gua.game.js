@@ -23,7 +23,8 @@ let enableDebugMode = function(game, enable) {
         {
             // 暂停功能
             window.paused = !window.paused
-        } else if ('1234567'.includes(k))
+        }
+        else if ('1234567'.includes(k))
         {
             // 为了 debug 临时加的载入关卡功能
             // blocks = loadLevel(game, Number(k))
@@ -60,10 +61,10 @@ let __main = function() {
         b2: 'bird/b2.png',
         b3: 'bird/b3.png',
         //
-        t1: 'tiles/1.png',
-        t2: 'tiles/2.png',
-        t3: 'tiles/3.png',
-        t4: 'tiles/4.png',
+        t1: 'tiles/t1.png',
+        t2: 'tiles/t2.png',
+        t3: 'tiles/t3.png',
+        t4: 'tiles/t4.png',
     }
 
     let request = {
@@ -78,7 +79,6 @@ let __main = function() {
                 g.runWithScene(s)
             })
             enableDebugMode(game, true)
-
         },
     }
     ajax(request)
