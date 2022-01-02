@@ -111,7 +111,7 @@ class GuaNesSprite {
         {
             this.y += this.vy
             this.vy += this.gy * 0.2
-            // 如果陷入地面， 重置 y 位置
+            // 如果陷入地面，重置 y 位置
             let j = Math.floor(this.y / this.tileSize) + 2
             let onTheGround = this.map.onTheGround(i, j)
             if (onTheGround)

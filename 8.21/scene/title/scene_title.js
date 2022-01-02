@@ -1,9 +1,11 @@
 log('*************** scene title')
+
 class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
         this.setup()
     }
+
     setup() {
         // bg
         let bg = GuaImage.new(this.game, 'bg')
@@ -17,29 +19,38 @@ class SceneTitle extends GuaScene {
         //
         this.setupInputs()
     }
+
     debug() {
     }
+
     update() {
         super.update()
     }
+
     setupInputs() {
         let self = this
         // mouse inputs
         let startDrag = false
-        this.game.registerMouse(function(event, status){
+        this.game.registerMouse(function(event, status) {
             let x = event.offsetX
             let y = event.offsetY
-            if (status == 'down') {
+            if (status == 'down')
+            {
                 let 点到了 = self.gun.pointInFrame(x, y)
-                if (点到了) {
+                if (点到了)
+                {
                     startDrag = true
                     self.tower = self.gun.clone()
                     self.addElement(self.tower)
                 }
-            } else if (status == 'move') {
+            }
+            else if (status == 'move')
+            {
                 self.tower.x = x
                 self.tower.y = y
-            } else {
+            }
+            else
+            {
                 startDrag = false
                 // self.tower = null
                 log('删除 tower', self.tower)

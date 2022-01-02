@@ -11,6 +11,7 @@ class GuaImage {
         this.flipY = false
         this.rotation = 0
     }
+
     clone() {
         // let c = Object.assign({}, this)
         let c = GuaImage.new(this.game, this.name)
@@ -19,18 +20,22 @@ class GuaImage {
         log('clone', c, typeof c)
         return c
     }
+
     static new(game, name) {
         let i = new this(game, name)
         return i
     }
+
     pointInFrame(x, y) {
         let xIn = x >= this.x && x <= this.x + this.w
         let yIn = y >= this.y && y <= this.y + this.h
         return xIn && yIn
     }
+
     draw() {
         this.game.drawImage(this)
     }
+
     update() {
 
     }

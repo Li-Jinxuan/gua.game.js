@@ -4,6 +4,7 @@ class Enemy1 extends GuaImage {
         super(game, name)
         this.setup()
     }
+
     setup() {
         this.dead = false
         this.y = 200
@@ -11,22 +12,28 @@ class Enemy1 extends GuaImage {
         this.hp = 8
         this.destination = 500
     }
+
     update() {
-        if (this.dead) {
+        if (this.dead)
+        {
             return
         }
         this.x += this.speed
-        if (this.x > this.destination) {
+        if (this.x > this.destination)
+        {
             log('敌人已经到达')
         }
     }
+
     被攻击(ap) {
         // ap 就是攻击力
         this.hp -= ap
-        if (this.hp <= 0) {
+        if (this.hp <= 0)
+        {
             this.die()
         }
     }
+
     die() {
         this.dead = true
         // 先应该播放闪动的动画

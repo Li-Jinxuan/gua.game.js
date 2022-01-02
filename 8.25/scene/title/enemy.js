@@ -4,6 +4,7 @@ class Enemy1 extends GuaImage {
         super(game, name)
         this.setup()
     }
+
     setup() {
         this.dead = false
         this.y = 170
@@ -12,6 +13,7 @@ class Enemy1 extends GuaImage {
         this.hp = this.maxHP
         this.destination = 500
     }
+
     drawLifeBar() {
         let context = this.game.context
         context.fillStyle = 'red'
@@ -23,26 +25,33 @@ class Enemy1 extends GuaImage {
         let w1 = w * (this.hp / this.maxHP)
         context.fillRect(x, y, w1, h)
     }
+
     draw() {
         super.draw()
         this.drawLifeBar()
     }
+
     update() {
-        if (this.dead) {
+        if (this.dead)
+        {
             return
         }
         this.x += this.speed
-        if (this.x > this.destination) {
+        if (this.x > this.destination)
+        {
             log('敌人已经到达')
         }
     }
+
     被攻击(ap) {
         // ap 就是攻击力
         this.hp -= ap
-        if (this.hp <= 0) {
+        if (this.hp <= 0)
+        {
             this.die()
         }
     }
+
     die() {
         this.dead = true
         // 先应该播放闪动的动画
