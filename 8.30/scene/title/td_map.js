@@ -5,13 +5,16 @@ class TDMap {
         this.h = h
         this.setup()
     }
+
     static new(...args) {
         return new this(...args)
     }
+
     addTower(i, j) {
         // 10 表示 tower
         this.grid[j][i] = 10
     }
+
     setup() {
         let grid = [
             [0, 0, 1, 0,],

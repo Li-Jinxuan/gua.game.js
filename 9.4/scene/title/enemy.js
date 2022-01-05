@@ -5,16 +5,20 @@ class Enemy1 extends GuaImage {
         this.tileSize = 0
         this.setup()
     }
+
     resetPath(path) {
         let steps = []
         let s = this.tileSize
-        for (let p of path) {
+        for (let p of path)
+        {
             let c = [p.x * s, p.y * s]
             steps.push(c)
         }
+        log('steps', steps)
         this.steps = steps
         this.stepIndex = 0
     }
+
     setup() {
         this.map = null
         this.stepIndex = 0
@@ -26,6 +30,7 @@ class Enemy1 extends GuaImage {
         this.hp = this.maxHP
         this.destination = 500
     }
+
     drawLifeBar() {
         let context = this.game.context
         context.fillStyle = 'red'
@@ -37,45 +42,56 @@ class Enemy1 extends GuaImage {
         let w1 = w * (this.hp / this.maxHP)
         context.fillRect(x, y, w1, h)
     }
+
     draw() {
         super.draw()
         this.drawLifeBar()
     }
+
     update() {
-        if (this.dead) {
+        if (this.dead)
+        {
             return
         }
-        if (this.steps.length == 0) {
+        if (this.steps.length == 0)
+        {
             return
         }
         let [dx, dy] = this.steps[this.stepIndex]
         let signX = dx > this.x ? 1 : -1
         let signY = dy > this.y ? 1 : -1
-        if (dx == this.x) {
+        if (dx == this.x)
+        {
             signX = 0
         }
-        if (dy == this.y) {
+        if (dy == this.y)
+        {
             signY = 0
         }
         this.x += this.speed * signX
         this.y += this.speed * signY
-        if (this.x == dx && this.y == dy) {
+        if (this.x == dx && this.y == dy)
+        {
             log('敌人已经到达目标点')
             this.stepIndex++
             // 判断敌人是否到达终点
-            if (this.stepIndex == this.steps.length) {
+            if (this.stepIndex == this.steps.length)
+            {
                 log('敌人到达终点')
                 this.die()
             }
         }
     }
+
     被攻击(ap) {
         // ap 就是攻击力
         this.hp -= ap
-        if (this.hp <= 0) {
+        if (this.hp <= 0)
+        {
             this.die()
         }
     }
+
     die() {
         this.dead = true
         // 先应该播放闪动的动画

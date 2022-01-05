@@ -17,6 +17,7 @@ class Zombie extends GuaAnimation {
         }
         return new this(game, animation)
     }
+
     setup() {
     }
 }
