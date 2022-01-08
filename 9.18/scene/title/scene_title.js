@@ -4,6 +4,7 @@ class SceneTitle extends GuaScene {
         super(game)
         this.setup()
     }
+
     setup() {
         this.zombies = []
         this.plants = []
@@ -19,19 +20,24 @@ class SceneTitle extends GuaScene {
         this.setupZombies()
         this.setupPlants()
     }
+
     setupBG() {
         let bg = GuaImage.new(this.game, 'bg1')
         this.addElement(bg)
     }
+
     setupPlants() {
-        for (let j = 0; j < 1; j++) {
-            for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 1; j++)
+        {
+            for (let i = 0; i < 5; i++)
+            {
                 let p = PeaShooter.new(this.game)
                 // 255 和 100 是横纵的 偏移(offset)
                 this.addPlant(p, i, j)
             }
         }
     }
+
     addPlant(plant, row, column) {
         let p = plant
         p.x = this.offsetX + column * this.widthOfColumn
@@ -40,6 +46,7 @@ class SceneTitle extends GuaScene {
         this.addElement(p)
         this.plants.push(p)
     }
+
     addZombie(row) {
         // row 表示第几排，场景会自动计算坐标，所以不应该设置 zombie 的 x y
         let zombie = Zombie.new(this.game)
@@ -49,6 +56,7 @@ class SceneTitle extends GuaScene {
         this.addElement(zombie)
         this.zombies.push(zombie)
     }
+
     setupZombies() {
         this.addZombie(1)
         this.addZombie(3)
@@ -57,34 +65,45 @@ class SceneTitle extends GuaScene {
         // 可以在 浏览器控制台中用 z 这个全局变量来调试，切换动画角色：
         // z.changeAnimation('walking')   z.changeAnimation('walking')
     }
+
     setupInputs() {
     }
+
     update() {
         super.update()
         // 检测开火和碰撞
         this.updateFire()
         this.updateHit()
     }
+
     updateFire() {
-        for (let z of this.zombies) {
+        for (let z of this.zombies)
+        {
             let row = z.row
-            for (let p of this.plants) {
-                if (p.row == row) {
+            for (let p of this.plants)
+            {
+                if (p.row == row)
+                {
                     p.awake()
                 }
             }
         }
 
     }
+
     updateHit() {
         // log('bullets', this.bullets.length)
-        for (let z of this.zombies) {
+        for (let z of this.zombies)
+        {
             let row = z.row
-            for (let b of this.bullets) {
+            for (let b of this.bullets)
+            {
                 // log('row', b.row, row)
-                if (b.row == row) {
+                if (b.row == row)
+                {
                     // 判断是否相撞
-                    if (z.x - b.x < 20) {
+                    if (z.x - b.x < 20)
+                    {
                         // TODO, 临时性的修改
                         b.x += 10000
                     }
