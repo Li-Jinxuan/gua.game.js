@@ -8,9 +8,11 @@ class PeaBullet extends GuaImage {
         // 子弹在第几排
         this.row = -1
     }
+
     static new(...args) {
         return new this(...args)
     }
+
     update() {
         this.x += this.speed
     }

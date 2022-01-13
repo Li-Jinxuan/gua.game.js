@@ -3,6 +3,7 @@ class SceneTitle extends GuaScene {
         super(game)
         this.setup()
     }
+
     // setup 系列
     setup() {
         this.zombies = []
@@ -21,27 +22,34 @@ class SceneTitle extends GuaScene {
         this.setupZombies()
         this.setupPlants()
     }
+
     setupBG() {
         let bg = GuaImage.new(this.game, 'bg1')
         this.addElement(bg)
     }
+
     setupPlants() {
-        for (let j = 0; j < 1; j++) {
-            for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 1; j++)
+        {
+            for (let i = 0; i < 5; i++)
+            {
                 let p = PeaShooter.new(this.game)
                 // 255 和 100 是横纵的 偏移(offset)
                 this.addPlant(p, i, j)
             }
         }
     }
+
     setupZombies() {
         this.addZombie(1)
         this.addZombie(3)
         //
         // window.z = zombie
     }
+
     setupInputs() {
     }
+
     // add 系列
     addPlant(plant, row, column) {
         let p = plant
@@ -51,6 +59,7 @@ class SceneTitle extends GuaScene {
         this.addElement(p)
         this.plants.push(p)
     }
+
     addZombie(row) {
         // row 表示第几排，场景会自动计算坐标，所以不应该设置 zombie 的 x y
         let zombie = Zombie.new(this.game)
@@ -60,6 +69,7 @@ class SceneTitle extends GuaScene {
         this.addElement(zombie)
         this.zombies.push(zombie)
     }
+
     // remove 系列
     removeBullet(bullet) {
         this.bullets = this.bullets.filter(e => {
@@ -67,6 +77,7 @@ class SceneTitle extends GuaScene {
         })
         this.removeElement(bullet)
     }
+
     removeZombie(zombie) {
         this.zombies = this.zombies.filter(z => {
             return z != zombie
@@ -74,11 +85,13 @@ class SceneTitle extends GuaScene {
         // log('remove zombie', this.zombies.length, zombie)
         this.removeElement(zombie)
     }
+
     // debug
     debug() {
         this.bulletHitOffset = config.hit_offset.value
         // log('debug')
     }
+
     // update 系列
     update() {
         super.update()
@@ -86,25 +99,34 @@ class SceneTitle extends GuaScene {
         this.updateFire()
         this.updateHit()
     }
+
     updateFire() {
-        for (let p of this.plants) {
+        for (let p of this.plants)
+        {
             p.sleep()
-            for (let z of this.zombies) {
-                if (z.row == p.row) {
+            for (let z of this.zombies)
+            {
+                if (z.row == p.row)
+                {
                     p.awake()
                 }
             }
         }
     }
+
     updateHit() {
         // log('bullets', this.bullets.length)
-        for (let z of this.zombies) {
+        for (let z of this.zombies)
+        {
             let row = z.row
-            for (let b of this.bullets) {
+            for (let b of this.bullets)
+            {
                 // log('row', b.row, row)
-                if (b.row == row) {
+                if (b.row == row)
+                {
                     // 判断是否相撞
-                    if (z.x - b.x < this.bulletHitOffset) {
+                    if (z.x - b.x < this.bulletHitOffset)
+                    {
                         z.被击中(b.damage)
                         // TODO, 临时性的修改
                         b.remove()

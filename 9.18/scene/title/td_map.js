@@ -6,13 +6,16 @@ class TDMap {
         this.tileSize = 100
         this.setup()
     }
+
     static new(...args) {
         return new this(...args)
     }
+
     addTower(i, j) {
         // 10 表示 tower
         this.grid[i][j] = 10
     }
+
     setup() {
         // 0 不能走
         // 1 可以走
@@ -26,14 +29,20 @@ class TDMap {
         ]
         this.grid = grid
     }
+
     normalGrid() {
         let grid = []
-        for (let column of this.grid) {
+        for (let column of this.grid)
+        {
             let newColumn = []
-            for (let flag of column) {
-                if (flag != 1) {
+            for (let flag of column)
+            {
+                if (flag != 1)
+                {
                     newColumn.push(0)
-                } else {
+                }
+                else
+                {
                     newColumn.push(1)
                 }
             }
@@ -41,9 +50,11 @@ class TDMap {
         }
         return grid
     }
+
     showGrid() {
         log('map show grid\n', this.normalGrid())
     }
+
     pathfinding(i, j) {
         // if (i < 0) {
         //     i = 0
